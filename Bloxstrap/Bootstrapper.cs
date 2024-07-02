@@ -154,7 +154,7 @@ namespace Bloxstrap
                 else if (ex.GetType() == typeof(AggregateException))
                     ex = ex.InnerException!;
 
-                Frontend.ShowConnectivityDialog("Roblox", message, ex);
+                Frontend.ShowConnectivityDialog(Strings.Dialog_Connectivity_UnableToConnect, message, ex);
 
                 App.Terminate(ErrorCode.ERROR_CANCELLED);
             }
@@ -302,6 +302,14 @@ namespace Bloxstrap
                     _launchCommandLine += "production";
                 else
                     _launchCommandLine += App.Settings.Prop.Channel.ToLowerInvariant();
+
+                if (App.Settings.Prop.ForceRobloxLanguage)
+                {
+                    var match = Regex.Match(_launchCommandLine, "gameLocale:([a-z_]+)");
+
+                    if (match.Groups.Count == 2)
+                        _launchCommandLine = _launchCommandLine.Replace("robloxLocale:en_us", $"robloxLocale:{match.Groups[1].Value}");
+                }
             }
 
             // whether we should wait for roblox to exit to handle stuff in the background or clean up after roblox closes
@@ -1250,6 +1258,9 @@ namespace Bloxstrap
                     continue;
                 }
 
+                if (!App.Settings.Prop.UseFastFlagManager && String.Equals(relativeFile, "ClientSettings\\ClientAppSettings.json", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
                 if (relativeFile.EndsWith(".lock"))
                     continue;
 
@@ -1450,7 +1461,7 @@ namespace Bloxstrap
                     string hash = MD5Hash.FromStream(fileStream);
 
                     if (hash != package.Signature)
-                        throw new ChecksumFailedException($"Failed to verify download of {packageUrl}\n\nGot signature: {hash}\n\nPackage has been downloaded to {packageLocation}\n\nPlease send the file shown above in a bug report.");
+                        throw new ChecksumFailedException($"Failed to verify download of {packageUrl}\n\nExpected hash: {package.Signature}\nGot hash: {hash}");
 
                     App.Logger.WriteLine(LOG_IDENT, $"Finished downloading! ({totalBytesRead} bytes total)");
                     break;
@@ -1460,7 +1471,17 @@ namespace Bloxstrap
                     App.Logger.WriteLine(LOG_IDENT, $"An exception occurred after downloading {totalBytesRead} bytes. ({i}/{maxTries})");
                     App.Logger.WriteException(LOG_IDENT, ex);
 
-                    if (i >= maxTries || ex.GetType() == typeof(ChecksumFailedException))
+                    if (ex.GetType() == typeof(ChecksumFailedException))
+                    {
+                        Frontend.ShowConnectivityDialog(
+                            Strings.Dialog_Connectivity_UnableToDownload,
+                            String.Format(Strings.Dialog_Connectivity_UnableToDownloadReason, "[https://github.com/pizzaboxer/bloxstrap/wiki/Bloxstrap-is-unable-to-download-Roblox](https://github.com/pizzaboxer/bloxstrap/wiki/Bloxstrap-is-unable-to-download-Roblox)"),
+                            ex
+                        );
+
+                        App.Terminate(ErrorCode.ERROR_CANCELLED);
+                    }
+                    else if (i >= maxTries)
                         throw;
 
                     if (File.Exists(packageLocation))

@@ -8,10 +8,14 @@ namespace Bloxstrap.UI
 {
     static class Frontend
     {
+        public static void ShowLanguageSelection() => new LanguageSelectorDialog().ShowDialog();
+
         public static void ShowMenu(bool showAlreadyRunningWarning = false) => new MainWindow(showAlreadyRunningWarning).ShowDialog();
 
         public static MessageBoxResult ShowMessageBox(string message, MessageBoxImage icon = MessageBoxImage.None, MessageBoxButton buttons = MessageBoxButton.OK, MessageBoxResult defaultResult = MessageBoxResult.None)
         {
+            App.Logger.WriteLine("Frontend::ShowMessageBox", message);
+
             if (App.LaunchSettings.IsQuiet)
                 return defaultResult;
 
@@ -29,7 +33,7 @@ namespace Bloxstrap.UI
                     }));
 
                 default:
-                    return System.Windows.MessageBox.Show(message, App.ProjectName, buttons, icon);
+                    return MessageBox.Show(message, App.ProjectName, buttons, icon);
             }
         }
 
@@ -41,11 +45,11 @@ namespace Bloxstrap.UI
             });
         }
 
-        public static void ShowConnectivityDialog(string targetName, string description, Exception exception)
+        public static void ShowConnectivityDialog(string title, string description, Exception exception)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                new ConnectivityDialog(targetName, description, exception).ShowDialog();
+                new ConnectivityDialog(title, description, exception).ShowDialog();
             });
         }
 

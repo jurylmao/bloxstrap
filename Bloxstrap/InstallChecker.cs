@@ -130,6 +130,7 @@ namespace Bloxstrap
             App.IsSetupComplete = false;
 
             App.FastFlags.Load();
+            Frontend.ShowLanguageSelection();
             Frontend.ShowMenu();
 
             // exit if we don't click the install button on installation
@@ -259,12 +260,7 @@ namespace Bloxstrap
 
             if (isAutoUpgrade)
             {
-                App.NotifyIcon?.ShowAlert(
-                    string.Format(Resources.Strings.InstallChecker_Updated, currentVersionInfo.ProductVersion),
-                    Resources.Strings.InstallChecker_SeeWhatsNew,
-                    30,
-                    (_, _) => Utilities.ShellExecute($"https://github.com/{App.ProjectRepository}/releases/tag/v{currentVersionInfo.ProductVersion}")
-                );
+                Utilities.ShellExecute($"https://github.com/{App.ProjectRepository}/wiki/Release-notes-for-Bloxstrap-v{currentVersionInfo.ProductVersion}");
             }
             else if (!App.LaunchSettings.IsQuiet)
             {

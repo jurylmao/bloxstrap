@@ -112,8 +112,8 @@
             {
                 string? log = await sr.ReadLineAsync();
 
-                if (string.IsNullOrEmpty(log))
-                    logUpdatedEvent.WaitOne(1000);
+                if (log is null)
+                    logUpdatedEvent.WaitOne(250);
                 else
                     ExamineLogEntry(log);
             }
@@ -133,6 +133,14 @@
                 App.Logger.WriteLine(LOG_IDENT, $"Read {_logEntriesRead} log entries");
             else if (_logEntriesRead % 100 == 0)
                 App.Logger.WriteLine(LOG_IDENT, $"Read {_logEntriesRead} log entries");
+
+
+            if (App.Settings.Prop.UseDisableAppPatch && entry.Contains(GameLeavingEntry))
+            {
+                App.Logger.WriteLine(LOG_IDENT, "Received desktop app exit, closing Roblox");
+                using var process = Process.GetProcessById(_gameClientPid);
+                process.CloseMainWindow();
+            }
 
             if (!ActivityInGame && ActivityPlaceId == 0)
             {
@@ -209,13 +217,7 @@
             }
             else if (ActivityInGame && ActivityPlaceId != 0)
             {
-                if (App.Settings.Prop.UseDisableAppPatch && entry.Contains(GameLeavingEntry))
-                {
-                    App.Logger.WriteLine(LOG_IDENT, "Received desktop app exit, closing Roblox");
-                    using var process = Process.GetProcessById(_gameClientPid);
-                    process.CloseMainWindow();
-                }
-                else if (entry.Contains(GameDisconnectedEntry))
+                if (entry.Contains(GameDisconnectedEntry))
                 {
                     App.Logger.WriteLine(LOG_IDENT, $"Disconnected from Game ({ActivityPlaceId}/{ActivityJobId}/{ActivityMachineAddress})");
 

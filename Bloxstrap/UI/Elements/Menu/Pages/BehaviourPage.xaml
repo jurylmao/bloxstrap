@@ -30,6 +30,19 @@
         </controls:OptionControl>
 
         <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_Behaviour_ConfirmLaunches_Title}"
+            Description="{x:Static resources:Strings.Menu_Behaviour_ConfirmLaunches_Description}">
+            <ui:ToggleSwitch IsChecked="{Binding ConfirmLaunches, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
+            Header="{x:Static resources:Strings.Menu_Behaviour_ForceRobloxLanguage_Title}"
+            Description="{x:Static resources:Strings.Menu_Behaviour_ForceRobloxLanguage_Description}"
+            HelpLink="https://github.com/pizzaboxer/bloxstrap/wiki/Information-on-Roblox-app-localisation">
+            <ui:ToggleSwitch IsChecked="{Binding ForceRobloxLanguage, Mode=TwoWay}" />
+        </controls:OptionControl>
+
+        <controls:OptionControl 
             Header="{x:Static resources:Strings.Menu_Behaviour_ForceRobloxReinstall_Title}"
             Description="{x:Static resources:Strings.Menu_Behaviour_ForceRobloxReinstall_Description}">
             <controls:OptionControl.Style>

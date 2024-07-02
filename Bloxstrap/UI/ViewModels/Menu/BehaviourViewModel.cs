@@ -17,6 +17,18 @@
             set => App.Settings.Prop.CheckForUpdates = value;
         }
 
+        public bool ConfirmLaunches
+        {
+            get => App.Settings.Prop.ConfirmLaunches;
+            set => App.Settings.Prop.ConfirmLaunches = value;
+        }
+
+        public bool ForceRobloxLanguage
+        {
+            get => App.Settings.Prop.ForceRobloxLanguage;
+            set => App.Settings.Prop.ForceRobloxLanguage = value;
+        }
+
         public bool ForceRobloxReinstallation
         {
             // wouldnt it be better to check old version guids?

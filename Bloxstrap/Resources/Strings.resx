@@ -381,13 +381,10 @@ Click for more information</value>
   <data name="Enums.BootstrapperStyle.ProgressDialog" xml:space="preserve">
     <value>Roblox (~2014)</value>
   </data>
-  <data name="Enums.BootstrapperStyle.Terminal" xml:space="preserve">
-    <value>Terminal (2024)</value>
-  </data>
   <data name="Enums.BootstrapperStyle.VistaDialog" xml:space="preserve">
     <value>Vista (2008 - 2011)</value>
   </data>
-  <data name="Enums.BootstrapperStyle.Yeezus" xml:space="preserve">
+  <data name="Enums.BootstrapperStyle.YeezusDialog" xml:space="preserve">
     <value>Yeezus (2024)</value>
   </data>
   <data name="Enums.BootstrapperStyle.TerminalDialog" xml:space="preserve">
@@ -1074,5 +1071,8 @@ Selecting 'No' will ignore this warning and continue installation.</value>
   </data>
   <data name="Dialog.Connectivity.UnableToDownloadReason" xml:space="preserve">
     <value>Roblox cannot be downloaded at this time. Please read the following help page for more information: {0}</value>
+  </data>
+  <data name="Enums.BootstrapperStyle.SynapseXDialog" xml:space="preserve">
+    <value>SynapseX (2024)</value>
   </data>
 </root>

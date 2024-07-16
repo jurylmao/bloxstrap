@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bloxstrap.UI.Elements.Bootstrapper"
         mc:Ignorable="d"
-        Title="SynapseXDialog"
-        Height="260" 
-        Width="450"
+        Title="Wave"
+        Height="300" 
+        Width="300"
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
@@ -19,6 +19,6 @@
         <TextBlock Margin="0,216,0,31" Panel.ZIndex="1" TextAlignment="Center" FontSize="12" Foreground="#757575" Text="{Binding Message, Mode=OneWay}" Width="450" FontFamily="{StaticResource Rubik}" FontWeight="UltraLight"/>
         <ProgressBar IsIndeterminate="{Binding ProgressIndeterminate, Mode=OneWay}" Foreground="#ADDCE8" Background="#1b1b1b" Maximum="{Binding ProgressMaximum, Mode=OneWay}" Value="{Binding ProgressValue, Mode=OneWay}" Margin="-5,210,-5,25" Height="25"/>
         <Rectangle Fill="#121212" Margin="0,235,0,0"></Rectangle>
-        <Image Height="60" Width="300" Source="/Resources/BootstrapperStyles/SynapseXDialog/SynapseXLogo.png" Stretch="Fill" Margin="75,85,75,115"/>
+        <Image Height="70" Width="70" Source="/Resources/BootstrapperStyles/WaveBootstrapper/WaveLogo.png" Stretch="Fill" Margin="75,85,75,115"/>
     </Grid>
 </Window>
